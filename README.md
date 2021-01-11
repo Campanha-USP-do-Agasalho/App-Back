@@ -1,2 +1,2 @@
 # App-Back
-Backend do Aplicativo do projeto
+Backend do Aplicativo da Campanha USP do Agasalho
