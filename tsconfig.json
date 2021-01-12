@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "CommonJS",
+    "lib": [
+      "ES6"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "types": [
+      "jest", "node"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "*/**/@types"
+    ],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@presentation/*": [
+        "./src/adapters/presentation/*"
+      ],
+      "@entities/*": [
+        "./src/entities/*"
+      ],
+      "@repositories/*": [
+        "src/external/repositories/*"
+      ],
+      "@main/*": [
+        "./src/main/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ],
+      "@useCases/*": [
+        "./src/useCases/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}
