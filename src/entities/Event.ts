@@ -1,5 +1,6 @@
 export type Event = {
   title: string
+  period: string
   group: string
   team: string
   date: {

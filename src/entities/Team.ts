@@ -1,5 +1,7 @@
 export type Team = {
   name: string
   fullName: string
-  score: number
+  score: {
+    [period: string]: number
+  }
 }
