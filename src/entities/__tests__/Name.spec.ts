@@ -1,8 +1,13 @@
+import { InvalidNameError } from "@entities/errors"
+import { left } from "@shared/Either"
+import { Name } from ".."
+
 describe('Name Entity', () => {
-  it('Should create a new valid name', () => {
+  it('Should create a new valid name and trim', () => {
     const nameOrError = Name.create('Batatais ')
 
     expect(nameOrError.isRight()).toBeTruthy()
+    expect((<Name>nameOrError.value).value()).toBe('Batatais')
   })
 
   it('Should not create a short name (-2)', () => {

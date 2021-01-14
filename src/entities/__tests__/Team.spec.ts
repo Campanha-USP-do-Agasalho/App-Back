@@ -1,3 +1,6 @@
+import { InvalidNameError } from "@entities/errors"
+import { left } from "@shared/Either"
+
 describe('Team Entity', () => {
   it('Should create a new team', () => {
     const teamOrError = Team.create({ name: 'Infra', fullName: 'Infraestrutura' })
