@@ -78,14 +78,8 @@
         "groups": [
           "/^express/",
           "module",
-          "/^@config/",
           "/^@entities/",
-          "/^@repositories/",
           "/^@shared/",
-          "/^@useCases/",
-          "/^@components/",
-          "/^@theme/",
-          "/^@utils/",
           [
             "parent",
             "sibling",
@@ -98,24 +92,12 @@
         }
       }
     ],
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [
-          ".tsx"
-        ]
-      }
-    ],
     "import/prefer-default-export": "off",
-    "react/prop-types": "off",
     "no-param-reassign": "off",
     "jsx-a11y/label-has-associated-control": "off",
-    "react/jsx-curly-newline": "off",
     "no-shadow": "off",
     "no-alert": "off",
     "@typescript-eslint/ban-types": "warn",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-one-expression-per-line": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "camelcase": "off",
     "no-unused-expressions": "off",
@@ -145,13 +127,6 @@
         "project": "tsconfig.json"
       }
     },
-    "react": {
-      "createClass": "createReactClass",
-      "pragma": "React",
-      "fragment": "Fragment",
-      "version": "detect",
-      "flowVersion": "0.53"
-    },
     "propWrapperFunctions": [
       "forbidExtraProps",
       {
@@ -160,13 +135,6 @@
       },
       {
         "property": "myFavoriteWrapper"
-      }
-    ],
-    "linkComponents": [
-      "Hyperlink",
-      {
-        "name": "Link",
-        "linkAttribute": "to"
       }
     ]
   }
