@@ -1,5 +1,6 @@
-import { Either, left, right } from "@shared/Either"
-import { InvalidNameError } from "./errors"
+import { Either, left, right } from '@shared/Either'
+
+import { InvalidNameError } from './errors'
 
 export class Name {
   private name: string
@@ -8,7 +9,7 @@ export class Name {
     this.name = name
   }
 
-  public value() {
+  get value() {
     return this.name
   }
 

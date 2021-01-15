@@ -1,4 +1,4 @@
-import { ROLE } from "@entities/Role"
+import { ROLE } from '@entities/Role'
 
 export type Member = {
   name: string

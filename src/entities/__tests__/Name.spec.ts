@@ -1,13 +1,23 @@
-import { InvalidNameError } from "@entities/errors"
-import { left } from "@shared/Either"
-import { Name } from ".."
+import { Name } from '@entities'
+import { InvalidNameError } from '@entities/errors'
+
+import { left } from '@shared/Either'
 
 describe('Name Entity', () => {
   it('Should create a new valid name and trim', () => {
     const nameOrError = Name.create('Batatais ')
 
     expect(nameOrError.isRight()).toBeTruthy()
-    expect((<Name>nameOrError.value).value()).toBe('Batatais')
+    expect((<Name>nameOrError.value).value).toBe('Batatais')
+  })
+
+  it('Should allow names with space between words', () => {
+    const nameOrError = Name.create('Palavra pavrala laarvap joao pedro')
+
+    expect(nameOrError.isRight()).toBeTruthy()
+    expect((<Name>nameOrError.value).value).toBe(
+      'Palavra pavrala laarvap joao pedro'
+    )
   })
 
   it('Should not create a short name (-2)', () => {

@@ -23,6 +23,9 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
+      "@entities": [
+        "./src/entities"
+      ],
       "@entities/*": [
         "./src/entities/*"
       ],
