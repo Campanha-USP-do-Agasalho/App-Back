@@ -1,4 +1,4 @@
-import { EntityError } from "./EntityError"
+import { EntityError } from './EntityError'
 
 export class InvalidNameError extends Error implements EntityError {
   constructor(name: string) {

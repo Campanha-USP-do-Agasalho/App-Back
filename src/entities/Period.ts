@@ -1,5 +1,7 @@
+import { PeriodId } from './PeriodId'
+
 export type Period = {
-  id: string
+  id: PeriodId
   members: string[]
   coords: string[]
   events: string[]

@@ -1,6 +1,8 @@
+import { Name, PeriodId } from '@entities'
+
 export type Event = {
-  title: string
-  period: string
+  title: Name
+  period: PeriodId
   group: string
   team: string
   date: {

@@ -1,7 +1,7 @@
-import { Either, left, right } from '@shared/Either'
+import { Name } from '@entities'
+import { InvalidNameError } from '@entities/errors'
 
-import { InvalidNameError } from './errors'
-import { Name } from './Name'
+import { Either, left, right } from '@shared/Either'
 
 export class Team {
   name: Name

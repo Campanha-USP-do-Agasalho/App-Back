@@ -1,6 +1,6 @@
-import { Either, left, right } from '@shared/Either'
+import { InvalidNameError } from '@entities/errors'
 
-import { InvalidNameError } from './errors'
+import { Either, left, right } from '@shared/Either'
 
 export class Name {
   private name: string
