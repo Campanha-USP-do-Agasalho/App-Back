@@ -20,10 +20,12 @@ export class Member {
   wpp: string
   role: ROLE
   periods: string[]
-  emailNotification: boolean
-  allNotification: boolean
-  meetingsNotification: boolean
-  eventsNotification: boolean
+  notification: {
+    email: boolean
+    all: boolean
+    meetings: boolean
+    events: boolean
+  }
 
   private constructor(
     name: Name,
@@ -35,11 +37,7 @@ export class Member {
     hasCar: boolean,
     wpp: string,
     role: ROLE,
-    periods: string[],
-    emailN: boolean,
-    all: boolean,
-    meetings: boolean,
-    events: boolean
+    periods: string[]
   ) {
     this.name = name
     this.nickName = nickName
@@ -52,10 +50,12 @@ export class Member {
     this.wpp = wpp
     this.role = role
     this.periods = periods
-    this.emailNotification = emailN
-    this.allNotification = all
-    this.meetingsNotification = meetings
-    this.eventsNotification = events
+    this.notification = {
+      email: true,
+      all: true,
+      meetings: true,
+      events: true
+    }
   }
 
   get value() {
@@ -71,10 +71,7 @@ export class Member {
       wpp: this.wpp,
       role: this.role,
       periods: this.periods,
-      emailNotification: this.emailNotification,
-      allNotification: this.allNotification,
-      meetingsNotification: this.meetingsNotification,
-      eventsNotification: this.eventsNotification
+      notification: this.notification
     }
   }
 
@@ -89,10 +86,6 @@ export class Member {
     wpp: string
     role: ROLE
     periods: string[]
-    emailN: boolean
-    all: boolean
-    meetings: boolean
-    events: boolean
   }): Either<InvalidNameError, Member> {
     const nameOrError = Name.create(props.name)
     if (nameOrError.isLeft()) return left(nameOrError.value)
@@ -120,11 +113,7 @@ export class Member {
         props.hasCar,
         props.wpp,
         props.role,
-        props.periods,
-        props.emailN,
-        props.all,
-        props.meetings,
-        props.events
+        props.periods
       )
     )
   }

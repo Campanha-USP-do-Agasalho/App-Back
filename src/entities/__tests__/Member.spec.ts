@@ -24,11 +24,7 @@ describe('Member Entity', () => {
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: [],
-      emailN: true,
-      all: true,
-      meetings: true,
-      events: true
+      periods: []
     })
 
     expect(memberOrError).toEqual(left(new InvalidNameError(longName)))
@@ -46,11 +42,7 @@ describe('Member Entity', () => {
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: [],
-      emailN: true,
-      all: true,
-      meetings: true,
-      events: true
+      periods: []
     })
 
     expect(memberOrError).toEqual(left(new InvalidNameError(shortName)))
@@ -68,11 +60,7 @@ describe('Member Entity', () => {
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: [],
-      emailN: true,
-      all: true,
-      meetings: true,
-      events: true
+      periods: []
     })
 
     expect(memberOrError).toEqual(left(new InvalidEmailError('email')))
@@ -88,11 +76,7 @@ describe('Member Entity', () => {
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: [],
-      emailN: true,
-      all: true,
-      meetings: true,
-      events: true
+      periods: []
     })
     expect(memberOrError.isRight()).toBeTruthy()
     expect((<Member>memberOrError.value).value).toStrictEqual({
@@ -107,10 +91,12 @@ describe('Member Entity', () => {
       wpp: 'AAAAA',
       role: 0,
       periods: [],
-      emailNotification: true,
-      allNotification: true,
-      meetingsNotification: true,
-      eventsNotification: true
+      notification: {
+        email: true,
+        all: true,
+        meetings: true,
+        events: true
+      }
     })
   })
 })
