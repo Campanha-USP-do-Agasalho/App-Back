@@ -20,6 +20,13 @@ describe('Name Entity', () => {
     )
   })
 
+  it('Should allow names with stress', () => {
+    const nameOrError = Name.create('Goiába')
+
+    expect(nameOrError.isRight()).toBeTruthy()
+    expect((<Name>nameOrError.value).value).toBe('Goiába')
+  })
+
   it('Should not create a short name (-2)', () => {
     const nameOrError = Name.create('A')
 

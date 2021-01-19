@@ -20,7 +20,7 @@ export class Name {
   }
 
   public static validate(name: string) {
-    const tester = /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/g
+    const tester = /^[_A-z0-9À-ÿ]*((-|\s)*[_A-z0-9À-ÿ])*$/g
 
     if (name.trim().length < 2 || name.trim().length > 255) return false
     if (!isNaN(+name)) return false
