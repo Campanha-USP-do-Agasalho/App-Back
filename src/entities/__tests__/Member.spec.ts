@@ -1,5 +1,9 @@
 import { Member } from '@entities'
-import { InvalidNameError, InvalidEmailError } from '@entities/errors'
+import {
+  InvalidNameError,
+  InvalidEmailError,
+  InvalidPasswordError
+} from '@entities/errors'
 
 import { left } from '@shared/Either'
 
@@ -19,7 +23,7 @@ describe('Member Entity', () => {
       nickName: 'AAAAA',
       image: 'AAAAA',
       email: 'email@email.com',
-      password: 'AAAAA',
+      password: '123456789',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
@@ -37,7 +41,7 @@ describe('Member Entity', () => {
       nickName: 'AAAAA',
       image: 'AAAAA',
       email: 'email@email.com',
-      password: 'AAAAA',
+      password: '123456789',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
@@ -55,7 +59,7 @@ describe('Member Entity', () => {
       nickName: 'AAAAA',
       image: 'AAAAA',
       email: 'email',
-      password: 'AAAAA',
+      password: '123456789',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
@@ -71,7 +75,7 @@ describe('Member Entity', () => {
       name: 'Alvaro',
       image: 'AAAAA',
       email: 'email@email.com',
-      password: 'AAAAA',
+      password: '123456789',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
@@ -84,7 +88,7 @@ describe('Member Entity', () => {
       nickName: 'Alvaro',
       image: 'AAAAA',
       email: 'email@email.com',
-      password: 'AAAAA',
+      password: '123456789',
       team: {},
       course: 'AAAAA',
       hasCar: true,
@@ -98,5 +102,21 @@ describe('Member Entity', () => {
         events: true
       }
     })
+  })
+
+  it('Should not create a short passoword (-8)', () => {
+    const passwordOrError = Member.create({
+      name: 'Alvaro',
+      image: 'AAAAA',
+      email: 'email@email.com',
+      password: 'AAAAA',
+      course: 'AAAAA',
+      hasCar: true,
+      wpp: 'AAAAA',
+      role: 0,
+      periods: []
+    })
+
+    expect(passwordOrError).toEqual(left(new InvalidPasswordError('AAAAA')))
   })
 })

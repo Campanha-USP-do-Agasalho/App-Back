@@ -1,4 +1,4 @@
-import { ROLE, Name } from '@entities'
+import { ROLE, Name, Password } from '@entities'
 import { InvalidNameError } from '@entities/errors'
 
 import { Either, left, right } from '@shared/Either'
@@ -10,7 +10,7 @@ export class Member {
   nickName: Name
   image: string
   email: Email
-  password: string
+  password: Password
   team: {
     [period: string]: string
   }
@@ -32,7 +32,7 @@ export class Member {
     nickName: Name,
     image: string,
     email: Email,
-    password: string,
+    password: Password,
     course: string,
     hasCar: boolean,
     wpp: string,
@@ -64,7 +64,7 @@ export class Member {
       nickName: this.nickName.value,
       image: this.image,
       email: this.email.value,
-      password: this.password,
+      password: this.password.value,
       team: this.team,
       course: this.course,
       hasCar: this.hasCar,
@@ -102,13 +102,17 @@ export class Member {
     if (email0rError.isLeft()) return left(email0rError.value)
     const email = email0rError.value
 
+    const passwordOrError = Password.create(props.password)
+    if (passwordOrError.isLeft()) return left(passwordOrError.value)
+    const password = passwordOrError.value
+
     return right(
       new Member(
         name,
         nickName,
         props.image,
         email,
-        props.password,
+        password,
         props.course,
         props.hasCar,
         props.wpp,
