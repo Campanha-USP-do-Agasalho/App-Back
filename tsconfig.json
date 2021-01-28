@@ -13,8 +13,7 @@
       "jest", "node"
     ],
     "typeRoots": [
-      "./node_modules/@types",
-      "*/**/@types"
+      "./node_modules/@types"
     ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -24,23 +23,14 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "@presentation/*": [
-        "./src/adapters/presentation/*"
+      "@entities": [
+        "./src/entities"
       ],
       "@entities/*": [
         "./src/entities/*"
       ],
-      "@repositories/*": [
-        "src/external/repositories/*"
-      ],
-      "@main/*": [
-        "./src/main/*"
-      ],
       "@shared/*": [
         "./src/shared/*"
-      ],
-      "@useCases/*": [
-        "./src/useCases/*"
       ]
     }
   },

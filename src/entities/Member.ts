@@ -1,4 +1,4 @@
-import { ROLE } from "./Role";
+import { ROLE } from '@entities'
 
 export type Member = {
   name: string
@@ -6,11 +6,14 @@ export type Member = {
   image: string
   email: string
   password: string
-  team: string
+  team: {
+    [period: string]: string
+  }
   course: string
   hasCar: boolean
   wpp: string
   role: ROLE
+  periods: string[]
   notifications: {
     email: boolean
     all: boolean

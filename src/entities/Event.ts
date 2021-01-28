@@ -1,17 +1,20 @@
+import { Name, PeriodId } from '@entities'
+
 export type Event = {
-  title: string
-  group: string
+  title: Name
+  period: PeriodId
+  group: Name
   team: string
   date: {
     begin: Date
     end: Date
   }
-  loop: string
-  inscriptionLink: string
+  loop?: string
+  inscriptionLink?: string
   place: string
-  notfications: Date[]
+  notifications: Date[]
   lists: {
-    subscribers: string[]
+    subscribers?: string[]
     presence: string[]
   }
 }
