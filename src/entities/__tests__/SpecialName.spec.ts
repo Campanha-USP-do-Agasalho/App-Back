@@ -1,66 +1,61 @@
-import { Name } from '@entities'
+import { SpecialName } from '@entities'
 import { InvalidNameError } from '@entities/errors'
 
 import { left } from '@shared/Either'
 
-describe('Name Entity', () => {
+describe('Special Name Entity', () => {
   it('Should create a new valid name and trim', () => {
-    const nameOrError = Name.create('Batatais ')
+    const nameOrError = SpecialName.create('Batatais ')
 
     expect(nameOrError.isRight()).toBeTruthy()
-    expect((<Name>nameOrError.value).value).toBe('Batatais')
+    expect((<SpecialName>nameOrError.value).value).toBe('Batatais')
   })
 
   it('Should allow names with space between words', () => {
-    const nameOrError = Name.create('Palavra pavrala laarvap joao pedro')
+    const nameOrError = SpecialName.create('Palavra pavrala laarvap joao pedro')
 
     expect(nameOrError.isRight()).toBeTruthy()
-    expect((<Name>nameOrError.value).value).toBe(
+    expect((<SpecialName>nameOrError.value).value).toBe(
       'Palavra pavrala laarvap joao pedro'
     )
   })
 
   it('Should allow names with stress', () => {
-    const nameOrError = Name.create('Goiába')
+    const nameOrError = SpecialName.create('Goiába')
 
     expect(nameOrError.isRight()).toBeTruthy()
-    expect((<Name>nameOrError.value).value).toBe('Goiába')
+    expect((<SpecialName>nameOrError.value).value).toBe('Goiába')
+  })
+
+  it('Should allow names with special characteres', () => {
+    const nameOrError = SpecialName.create('Int&gr@ - 22:00')
+
+    expect(nameOrError.isRight()).toBeTruthy()
+    expect((<SpecialName>nameOrError.value).value).toBe('Int&gr@ - 22:00')
   })
 
   it('Should not create a short name (-2)', () => {
-    const nameOrError = Name.create('A')
+    const nameOrError = SpecialName.create('A')
 
     expect(nameOrError).toEqual(left(new InvalidNameError('A')))
   })
 
   it('Should not create a long name (+255)', () => {
     const longName = 'A'.repeat(256)
-    const nameOrError = Name.create(longName)
+    const nameOrError = SpecialName.create(longName)
 
     expect(nameOrError).toEqual(left(new InvalidNameError(longName)))
   })
 
   it('Should not create a number name', () => {
-    const nameOrError = Name.create('123')
+    const nameOrError = SpecialName.create('123')
 
     expect(nameOrError).toEqual(left(new InvalidNameError('123')))
   })
 
   it('Should not create an empty name', () => {
-    const nameOrError = Name.create('    ')
+    const nameOrError = SpecialName.create('    ')
 
     expect(nameOrError).toEqual(left(new InvalidNameError('    ')))
-  })
-
-  it('Should not create a name with special characters', () => {
-    const nameOrError = Name.create('@moeba')
-
-    expect(nameOrError).toEqual(left(new InvalidNameError('@moeba')))
-  })
-
-  it('Should not create a name with numbers', () => {
-    const nameOrError = Name.create('Klaus2')
-
-    expect(nameOrError).toEqual(left(new InvalidNameError('Klaus2')))
   })
 })
