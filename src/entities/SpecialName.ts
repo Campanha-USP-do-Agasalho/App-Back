@@ -2,7 +2,7 @@ import { InvalidNameError } from '@entities/errors'
 
 import { Either, left, right } from '@shared/Either'
 
-export class Name {
+export class SpecialName {
   private name: string
 
   private constructor(name: string) {
@@ -13,14 +13,14 @@ export class Name {
     return this.name
   }
 
-  public static create(name: string): Either<InvalidNameError, Name> {
+  public static create(name: string): Either<InvalidNameError, SpecialName> {
     if (!this.validate(name)) return left(new InvalidNameError(name))
 
-    return right(new Name(name.trim()))
+    return right(new SpecialName(name.trim()))
   }
 
   public static validate(name: string) {
-    const tester = /^[_A-zÀ-ÿ]*((-|\s)*[_A-zÀ-ÿ])*$/g
+    const tester = /^[a-zA-Z0-9À-ÿ!@#$&:()\-`.+,/\\"\s]*$/g
 
     if (name.trim().length < 2 || name.trim().length > 255) return false
     if (!isNaN(+name)) return false
