@@ -4,6 +4,7 @@ import { InvalidNameError } from '@entities/errors'
 import { Either, left, right } from '@shared/Either'
 
 import { Email } from './Email'
+import { PeriodId } from './PeriodId'
 
 export class Member {
   name: Name
@@ -19,7 +20,7 @@ export class Member {
   hasCar: boolean
   wpp: string
   role: ROLE
-  periods: string[]
+  periods: PeriodId[]
   notification: {
     email: boolean
     all: boolean
@@ -33,18 +34,19 @@ export class Member {
     image: string,
     email: Email,
     password: Password,
+    team: { [period: string]: string },
     course: string,
     hasCar: boolean,
     wpp: string,
     role: ROLE,
-    periods: string[]
+    periods: PeriodId[]
   ) {
     this.name = name
     this.nickName = nickName
     this.image = image
     this.email = email
     this.password = password
-    this.team = {}
+    this.team = team
     this.course = course
     this.hasCar = hasCar
     this.wpp = wpp
@@ -70,7 +72,7 @@ export class Member {
       hasCar: this.hasCar,
       wpp: this.wpp,
       role: this.role,
-      periods: this.periods,
+      periods: this.periods.map(period => period.value),
       notification: this.notification
     }
   }
@@ -81,11 +83,12 @@ export class Member {
     image: string
     email: string
     password: string
+    initialTeam: string
     course: string
     hasCar: boolean
     wpp: string
     role: ROLE
-    periods: string[]
+    initialPeriod: { year: number; semester: number }
   }): Either<InvalidNameError, Member> {
     const nameOrError = Name.create(props.name)
     if (nameOrError.isLeft()) return left(nameOrError.value)
@@ -106,6 +109,16 @@ export class Member {
     if (passwordOrError.isLeft()) return left(passwordOrError.value)
     const password = passwordOrError.value
 
+    const period0rError = PeriodId.create(props.initialPeriod)
+    if (period0rError.isLeft()) return left(period0rError.value)
+    const period = period0rError.value
+
+    const team: {
+      [period: string]: string
+    } = {}
+
+    team[period.value] = props.initialTeam
+
     return right(
       new Member(
         name,
@@ -113,11 +126,12 @@ export class Member {
         props.image,
         email,
         password,
+        team,
         props.course,
         props.hasCar,
         props.wpp,
         props.role,
-        props.periods
+        [period]
       )
     )
   }

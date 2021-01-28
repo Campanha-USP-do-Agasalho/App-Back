@@ -17,14 +17,14 @@ export class Notification {
     members: string[],
     date: Date,
     scheduleInit: Date | null,
-    schudleEnd: Date | null
+    scheduleEnd: Date | null
   ) {
     this.title = title
     this.body = body
     this.members = members
     this.date = date
     this.scheduleInit = scheduleInit
-    this.scheduleEnd = schudleEnd
+    this.scheduleEnd = scheduleEnd
   }
 
   get value() {
@@ -45,7 +45,7 @@ export class Notification {
     date: number
     scheduleInit?: number
     scheduleEnd?: number
-  }): Either<InvalidNameError, Notification> {
+  }): Either<InvalidNameError | InvalidBodyError, Notification> {
     const nameOrError = Name.create(props.title)
     if (nameOrError.isLeft()) return left(nameOrError.value)
     const title = nameOrError.value

@@ -24,11 +24,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email@email.com',
       password: '123456789',
+      initialTeam: 'infra',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: []
+      initialPeriod: { semester: 1, year: 2020 }
     })
 
     expect(memberOrError).toEqual(left(new InvalidNameError(longName)))
@@ -42,11 +43,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email@email.com',
       password: '123456789',
+      initialTeam: 'infra',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: []
+      initialPeriod: { semester: 1, year: 2020 }
     })
 
     expect(memberOrError).toEqual(left(new InvalidNameError(shortName)))
@@ -60,11 +62,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email',
       password: '123456789',
+      initialTeam: 'infra',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: []
+      initialPeriod: { semester: 1, year: 2020 }
     })
 
     expect(memberOrError).toEqual(left(new InvalidEmailError('email')))
@@ -76,11 +79,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email@email.com',
       password: '123456789',
+      initialTeam: 'infra',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: []
+      initialPeriod: { semester: 1, year: 2020 }
     })
     expect(memberOrError.isRight()).toBeTruthy()
     expect((<Member>memberOrError.value).value).toStrictEqual({
@@ -89,12 +93,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email@email.com',
       password: '123456789',
-      team: {},
+      team: { '2020-1': 'infra' },
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: [],
+      periods: ['2020-1'],
       notification: {
         email: true,
         all: true,
@@ -110,11 +114,12 @@ describe('Member Entity', () => {
       image: 'AAAAA',
       email: 'email@email.com',
       password: 'AAAAA',
+      initialTeam: 'infra',
       course: 'AAAAA',
       hasCar: true,
       wpp: 'AAAAA',
       role: 0,
-      periods: []
+      initialPeriod: { semester: 1, year: 2020 }
     })
 
     expect(passwordOrError).toEqual(left(new InvalidPasswordError('AAAAA')))
