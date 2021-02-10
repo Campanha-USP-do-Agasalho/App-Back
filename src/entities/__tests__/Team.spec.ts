@@ -13,8 +13,7 @@ describe('Team Entity', () => {
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
       name: 'Infra',
-      fullName: 'Infraestrutura',
-      score: {}
+      fullName: 'Infraestrutura'
     })
   })
 
@@ -26,8 +25,7 @@ describe('Team Entity', () => {
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
       name: 'Entidades',
-      fullName: 'Entidades',
-      score: {}
+      fullName: 'Entidades'
     })
   })
 
