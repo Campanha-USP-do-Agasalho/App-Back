@@ -78,6 +78,7 @@
           "/^express/",
           "module",
           "/^@entities/",
+          "/^@useCases/",
           "/^@shared/",
           [
             "parent",

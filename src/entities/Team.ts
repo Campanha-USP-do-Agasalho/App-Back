@@ -9,13 +9,7 @@ export type TeamProps = {
 }
 
 export class Team {
-  name: Name
-  fullName: Name
-
-  private constructor(name: Name, fullName: Name) {
-    this.name = name
-    this.fullName = fullName
-  }
+  private constructor(private name: Name, private fullName: Name) {}
 
   get value(): TeamProps {
     return {
