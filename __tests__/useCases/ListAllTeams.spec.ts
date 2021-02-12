@@ -1,4 +1,6 @@
-import { ROLE, TeamProps } from '@entities'
+import { UserFromRequestBuilder } from '@builders'
+
+import { TeamProps } from '@entities'
 
 import { ConnectionError, UnauthorizedError } from '@useCases/errors'
 import { ListAllTeamsUseCase } from '@useCases/implementations/Teams'
@@ -38,10 +40,7 @@ describe('List All Teams Use Case', () => {
     const teamsRepositorySpy = jest.spyOn(teamsRepositoryStub, 'listAllTeams')
 
     const response = await sut.execute({
-      userFromRequest: {
-        id: 'floquinho',
-        role: ROLE.ADMIN
-      }
+      userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
     })
 
     expect(response.isRight()).toBeTruthy()
@@ -52,10 +51,9 @@ describe('List All Teams Use Case', () => {
     const { sut } = makeSut()
 
     const response = await sut.execute({
-      userFromRequest: {
-        id: 'floquinhocoord',
-        role: ROLE.COORD
-      }
+      userFromRequest: UserFromRequestBuilder.aUserFromRequest()
+        .asCoord()
+        .build()
     })
 
     expect(response.isRight()).toBeTruthy()
@@ -65,10 +63,9 @@ describe('List All Teams Use Case', () => {
     const { sut } = makeSut()
 
     const response = await sut.execute({
-      userFromRequest: {
-        id: 'naofloquinho',
-        role: ROLE.MEMBER
-      }
+      userFromRequest: UserFromRequestBuilder.aUserFromRequest()
+        .asMember()
+        .build()
     })
 
     expect(response).toEqual(left(new UnauthorizedError()))
@@ -84,10 +81,7 @@ describe('List All Teams Use Case', () => {
       })
 
     const response = await sut.execute({
-      userFromRequest: {
-        id: 'floquinho',
-        role: ROLE.ADMIN
-      }
+      userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
     })
 
     expect(response).toEqual(left(new ConnectionError('Teams Repository')))

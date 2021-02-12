@@ -23,6 +23,9 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
+      "@builders": [
+        "./__tests__/builders"
+      ],
       "@entities": [
         "./src/entities"
       ],
