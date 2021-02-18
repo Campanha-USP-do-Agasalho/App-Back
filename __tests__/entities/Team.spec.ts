@@ -6,14 +6,15 @@ import { left } from '@shared/Either'
 describe('Team Entity', () => {
   it('Should create a new team with score object as a null object', () => {
     const teamOrError = Team.create({
-      name: 'Infra',
+      name: 'Nome com algum espaço',
       fullName: 'Infraestrutura'
     })
 
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
-      name: 'Infra',
-      fullName: 'Infraestrutura'
+      name: 'Nome com algum espaço',
+      fullName: 'Infraestrutura',
+      id: 'nome'
     })
   })
 
@@ -25,7 +26,22 @@ describe('Team Entity', () => {
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
       name: 'Entidades',
-      fullName: 'Entidades'
+      fullName: 'Entidades',
+      id: 'entidades'
+    })
+  })
+
+  it('Should create a new team with valid id', () => {
+    const teamOrError = Team.create({
+      name: 'Divulgação',
+      id: 'divulgamais'
+    })
+
+    expect(teamOrError.isRight()).toBeTruthy()
+    expect((<Team>teamOrError.value).value).toStrictEqual({
+      name: 'Divulgação',
+      id: 'divulgamais',
+      fullName: 'Divulgação'
     })
   })
 

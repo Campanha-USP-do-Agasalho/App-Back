@@ -4,23 +4,30 @@ import { InvalidNameError } from '@entities/errors'
 import { Either, left, right } from '@shared/Either'
 
 export type TeamProps = {
+  id: string
   name: string
   fullName: string
 }
 
 export class Team {
-  private constructor(private name: Name, private fullName: Name) {}
+  private constructor(
+    private name: Name,
+    private fullName: Name,
+    private id: string
+  ) {}
 
   get value(): TeamProps {
     return {
       name: this.name.value,
-      fullName: this.fullName.value
+      fullName: this.fullName.value,
+      id: this.id
     }
   }
 
   public static create(props: {
     name: string
     fullName?: string
+    id?: string
   }): Either<InvalidNameError, Team> {
     const nameOrError = Name.create(props.name)
     if (nameOrError.isLeft()) return left(nameOrError.value)
@@ -33,6 +40,12 @@ export class Team {
       fullName = fullNameOrError.value
     }
 
-    return right(new Team(name, fullName))
+    return right(
+      new Team(
+        name,
+        fullName,
+        props.id || name.value.split(' ')[0].toLowerCase()
+      )
+    )
   }
 }
