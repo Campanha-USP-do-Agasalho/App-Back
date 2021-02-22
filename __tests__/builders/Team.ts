@@ -16,6 +16,17 @@ export class TeamBuilder {
     return this
   }
 
+  public withNewInfos = (): TeamBuilder => {
+    this.team.name = 'ramen'
+    this.team.fullName = 'ramen de linguica e tomate'
+    return this
+  }
+
+  public withInvalidName = (): TeamBuilder => {
+    this.team.name = 'Mioj@o'
+    return this
+  }
+
   public build = (): TeamProps => {
     return this.team
   }
