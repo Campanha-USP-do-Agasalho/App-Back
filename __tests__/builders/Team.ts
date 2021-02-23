@@ -4,7 +4,7 @@ export class TeamBuilder {
   private team: TeamProps = {
     fullName: 'MiojãoBobao',
     name: 'Miojão',
-    id: 'miojo'
+    id: 'miojao.bobao'
   }
 
   static aTeam = (): TeamBuilder => {
