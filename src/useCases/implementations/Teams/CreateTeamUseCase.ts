@@ -1,5 +1,3 @@
-import { create } from 'domain'
-
 import { ROLE } from '@entities'
 
 import { UnauthorizedError } from '@useCases/errors'

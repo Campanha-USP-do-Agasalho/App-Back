@@ -8,10 +8,6 @@ import {
   CreateTeam,
   CreateTeamTeamsRepository
 } from '@useCases/ports/Teams/CreateTeam'
-import {
-  RecoverTeamById,
-  RecoverTeamByIdTeamsRepository
-} from '@useCases/ports/Teams/RecoverTeamById'
 
 import { Either, left, right } from '@shared/Either'
 
@@ -25,8 +21,7 @@ const makeTeamsRepositoryStub = (): CreateTeamTeamsRepository => {
     async createTeam(
       teamProps: TeamProps
     ): Promise<Either<ConnectionError, TeamProps>> {
-      const team = TeamBuilder.aTeam().build()
-      return right(team)
+      return right(teamProps)
     }
   }
   return new TeamsRepositoryStub()
@@ -51,7 +46,7 @@ describe('Create Team Ue Case', () => {
     expect(response).toEqual(right(team))
   })
 
-  it('Should not allow users whith Member role to create a team', async () => {
+  it('Should not allow users with Member role to create a team', async () => {
     const { sut } = makeSut()
     const team = TeamBuilder.aTeam().build()
     const response = await sut.execute({

@@ -1,11 +1,7 @@
 import { TeamProps } from '@entities'
 
 import { UseCase } from '@useCases/contracts'
-import {
-  ConnectionError,
-  TeamNotFoundError,
-  UnauthorizedError
-} from '@useCases/errors'
+import { ConnectionError, UnauthorizedError } from '@useCases/errors'
 
 export type CreateTeamProps = {
   userFromRequest: {
