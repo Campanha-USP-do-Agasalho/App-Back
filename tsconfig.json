@@ -32,6 +32,9 @@
       "@entities/*": [
         "./src/entities/*"
       ],
+      "@adapters/*": [
+        "./src/adapters/*"
+      ],
       "@useCases/*": [
         "./src/useCases/*"
       ],
