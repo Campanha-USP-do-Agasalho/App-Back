@@ -13,8 +13,7 @@ describe('Team Entity', () => {
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
       name: 'Nome com algum espaço',
-      fullName: 'Infraestrutura',
-      id: 'nome'
+      fullName: 'Infraestrutura'
     })
   })
 
@@ -26,22 +25,7 @@ describe('Team Entity', () => {
     expect(teamOrError.isRight()).toBeTruthy()
     expect((<Team>teamOrError.value).value).toStrictEqual({
       name: 'Entidades',
-      fullName: 'Entidades',
-      id: 'entidades'
-    })
-  })
-
-  it('Should create a new team with valid id', () => {
-    const teamOrError = Team.create({
-      name: 'Divulgação',
-      id: 'divulgamais'
-    })
-
-    expect(teamOrError.isRight()).toBeTruthy()
-    expect((<Team>teamOrError.value).value).toStrictEqual({
-      name: 'Divulgação',
-      id: 'divulgamais',
-      fullName: 'Divulgação'
+      fullName: 'Entidades'
     })
   })
 
