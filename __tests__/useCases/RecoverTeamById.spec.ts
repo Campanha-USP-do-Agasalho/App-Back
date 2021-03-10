@@ -1,4 +1,4 @@
-import { TeamBuilder, UserFromRequestBuilder } from '@builders'
+import { TeamWithIdBuilder, UserFromRequestBuilder } from '@builders'
 
 import { TeamProps } from '@entities'
 
@@ -9,7 +9,7 @@ import {
   RecoverTeamByIdTeamsRepository
 } from '@useCases/ports/Teams/RecoverTeamById'
 
-import { Either, left, right } from '@shared/Either'
+import { Either, left, right, WithId } from '@shared'
 
 interface ISutType {
   sut: RecoverTeamById
@@ -20,8 +20,8 @@ const makeTeamsRepositoryStub = (): RecoverTeamByIdTeamsRepository => {
   class TeamsRepositoryStub implements RecoverTeamByIdTeamsRepository {
     async recoverTeamById(
       teamId: string
-    ): Promise<Either<ConnectionError, TeamProps | null>> {
-      const team = TeamBuilder.aTeam().build()
+    ): Promise<Either<ConnectionError, WithId<TeamProps> | null>> {
+      const team = TeamWithIdBuilder.aTeam().build()
       if (teamId === team.id) {
         return right(team)
       }
@@ -41,7 +41,7 @@ const makeSut = (): ISutType => {
 describe('Recover Team By Id Use Case', () => {
   it('Should return a valid team with the requested id', async () => {
     const { sut } = makeSut()
-    const team = TeamBuilder.aTeam().build()
+    const team = TeamWithIdBuilder.aTeam().build()
     const response = await sut.execute({
       teamId: team.id,
       userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
@@ -52,7 +52,7 @@ describe('Recover Team By Id Use Case', () => {
 
   it('Should reaturn a team not found if there is no team with the requested id', async () => {
     const { sut } = makeSut()
-    const team = TeamBuilder.aTeam().withNotRegisteredId().build()
+    const team = TeamWithIdBuilder.aTeam().withNotRegisteredId().build()
     const response = await sut.execute({
       teamId: team.id,
       userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
@@ -63,7 +63,7 @@ describe('Recover Team By Id Use Case', () => {
 
   it('Should allow users with MEMBER role to access this use case', async () => {
     const { sut } = makeSut()
-    const team = TeamBuilder.aTeam().build()
+    const team = TeamWithIdBuilder.aTeam().build()
     const response = await sut.execute({
       teamId: team.id,
       userFromRequest: UserFromRequestBuilder.aUserFromRequest()
@@ -83,7 +83,7 @@ describe('Recover Team By Id Use Case', () => {
         return left(new ConnectionError('Teams Repository'))
       })
 
-    const team = TeamBuilder.aTeam().build()
+    const team = TeamWithIdBuilder.aTeam().build()
     const response = await sut.execute({
       teamId: team.id,
       userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()

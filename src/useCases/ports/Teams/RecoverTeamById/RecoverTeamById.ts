@@ -7,6 +7,8 @@ import {
   UnauthorizedError
 } from '@useCases/errors'
 
+import { WithId } from '@shared'
+
 export type RecoverTeamByIdProps = {
   userFromRequest: {
     id: string
@@ -20,7 +22,7 @@ export type RecoverTeamByIdPossibleErrors =
   | UnauthorizedError
   | TeamNotFoundError
 
-export type RecoverTeamByIdSuccessResponse = TeamProps
+export type RecoverTeamByIdSuccessResponse = WithId<TeamProps>
 
 export type RecoverTeamById = UseCase<
   RecoverTeamByIdProps,

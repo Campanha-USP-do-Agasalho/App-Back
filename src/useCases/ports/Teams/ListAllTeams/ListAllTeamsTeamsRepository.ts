@@ -2,8 +2,8 @@ import { TeamProps } from '@entities'
 
 import { ConnectionError } from '@useCases/errors'
 
-import { Either } from '@shared/Either'
+import { Either, WithId } from '@shared'
 
 export interface ListAllTeamsTeamsRepository {
-  listAllTeams: () => Promise<Either<ConnectionError, TeamProps[]>>
+  listAllTeams: () => Promise<Either<ConnectionError, WithId<TeamProps>[]>>
 }
