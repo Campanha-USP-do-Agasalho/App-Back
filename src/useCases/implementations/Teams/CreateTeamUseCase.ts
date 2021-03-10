@@ -1,6 +1,7 @@
 import { ROLE } from '@entities'
 
 import { UnauthorizedError } from '@useCases/errors'
+import { IIdManager } from '@useCases/ports/external/utils'
 import {
   CreateTeam,
   CreateTeamPossibleErrors,
@@ -9,11 +10,13 @@ import {
   CreateTeamTeamsRepository
 } from '@useCases/ports/Teams/CreateTeam'
 
-import { Either, left, right } from '@shared/Either'
-import { Permissions } from '@shared/Permissions'
+import { Either, left, right, Permissions } from '@shared'
 
 export class CreateTeamUseCase implements CreateTeam {
-  constructor(private readonly teamsRepository: CreateTeamTeamsRepository) {}
+  constructor(
+    private readonly teamsRepository: CreateTeamTeamsRepository,
+    private readonly idManager: IIdManager
+  ) {}
 
   async execute(
     props: CreateTeamProps
@@ -26,9 +29,13 @@ export class CreateTeamUseCase implements CreateTeam {
     ) {
       return left(new UnauthorizedError())
     }
-    const createTeamOrError = await this.teamsRepository.createTeam(
-      props.teamProps
-    )
+
+    const teamId = await this.idManager.generate(props.teamProps.name)
+
+    const createTeamOrError = await this.teamsRepository.createTeam({
+      ...props.teamProps,
+      id: teamId
+    })
     if (createTeamOrError.isLeft()) {
       return left(createTeamOrError.value)
     }

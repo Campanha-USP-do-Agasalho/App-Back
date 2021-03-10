@@ -38,6 +38,9 @@
       "@useCases/*": [
         "./src/useCases/*"
       ],
+      "@shared": [
+        "./src/shared"
+      ],
       "@shared/*": [
         "./src/shared/*"
       ]
