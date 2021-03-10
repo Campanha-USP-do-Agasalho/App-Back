@@ -8,13 +8,15 @@ import {
   UnauthorizedError
 } from '@useCases/errors'
 
+import { WithId } from '@shared'
+
 export type UpdateTeamProps = {
   userFromRequest: {
     id: string
     role: number
   }
   teamId: string
-  teamProps: Partial<Omit<TeamProps, 'id'>>
+  teamProps: Partial<TeamProps>
 }
 
 export type UpdateTeamPossibleErrors =
@@ -23,7 +25,7 @@ export type UpdateTeamPossibleErrors =
   | TeamNotFoundError
   | EntityError
 
-export type UpdateTeamSuccessResponse = TeamProps
+export type UpdateTeamSuccessResponse = WithId<TeamProps>
 
 export type UpdateTeam = UseCase<
   UpdateTeamProps,

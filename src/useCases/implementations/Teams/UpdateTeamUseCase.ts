@@ -8,15 +8,14 @@ import {
   UpdateTeamTeamsRepository
 } from '@useCases/ports/Teams/UpdateTeam'
 
-import { Either, left, right } from '@shared/Either'
-import { Permissions } from '@shared/Permissions'
+import { Permissions, WithId, Either, left, right } from '@shared'
 
 export class UpdateTeamUseCase implements UpdateTeam {
   constructor(private readonly teamsRepository: UpdateTeamTeamsRepository) {}
 
   async execute(
     props: UpdateTeamProps
-  ): Promise<Either<UpdateTeamPossibleErrors, TeamProps>> {
+  ): Promise<Either<UpdateTeamPossibleErrors, WithId<TeamProps>>> {
     if (
       !Permissions.verifyPermissionOnRole(
         props.userFromRequest.role,
@@ -43,6 +42,6 @@ export class UpdateTeamUseCase implements UpdateTeam {
     const response = await this.teamsRepository.updateTeam(props.teamId, team)
     if (response.isLeft()) return left(response.value)
 
-    return right(team)
+    return right({ ...team, id: props.teamId })
   }
 }

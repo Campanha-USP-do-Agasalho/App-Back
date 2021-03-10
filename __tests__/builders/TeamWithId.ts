@@ -18,6 +18,17 @@ export class TeamWithIdBuilder {
     return this
   }
 
+  public withNewInfos = (): TeamWithIdBuilder => {
+    this.team.name = 'ramen'
+    this.team.fullName = 'ramen de linguica e tomate'
+    return this
+  }
+
+  public withInvalidName = (): TeamWithIdBuilder => {
+    this.team.name = 'Mioj@o'
+    return this
+  }
+
   public build = (): WithId<TeamProps> => {
     return this.team
   }

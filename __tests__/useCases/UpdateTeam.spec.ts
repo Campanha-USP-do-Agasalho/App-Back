@@ -1,4 +1,4 @@
-import { TeamBuilder, UserFromRequestBuilder } from '@builders'
+import { TeamWithIdBuilder, UserFromRequestBuilder } from '@builders'
 
 import { TeamProps } from '@entities'
 import { InvalidNameError } from '@entities/errors'
@@ -14,6 +14,7 @@ import {
   UpdateTeamTeamsRepository
 } from '@useCases/ports/Teams/UpdateTeam'
 
+import { WithId } from '@shared'
 import { Either, left, right } from '@shared/Either'
 
 interface ISutType {
@@ -25,8 +26,8 @@ const makeTeamsRepositoryStub = (): UpdateTeamTeamsRepository => {
   class TeamsRepositoryStub implements UpdateTeamTeamsRepository {
     async recoverTeamById(
       teamId: string
-    ): Promise<Either<ConnectionError, TeamProps | null>> {
-      const team = TeamBuilder.aTeam().build()
+    ): Promise<Either<ConnectionError, WithId<TeamProps> | null>> {
+      const team = TeamWithIdBuilder.aTeam().build()
       if (teamId === team.id) return right(team)
       return right(null)
     }
@@ -56,7 +57,7 @@ describe('Update Team Use Case', () => {
 
       const teamsRepositorySpy = jest.spyOn(teamsRepositoryStub, 'updateTeam')
 
-      const teamProps = TeamBuilder.aTeam().withNewInfos().build()
+      const teamProps = TeamWithIdBuilder.aTeam().withNewInfos().build()
 
       await sut.execute({
         teamId: teamProps.id,
@@ -64,13 +65,17 @@ describe('Update Team Use Case', () => {
         userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
       })
 
-      expect(teamsRepositorySpy).toBeCalledWith(teamProps.id, teamProps)
+      const { name, fullName } = teamProps
+      expect(teamsRepositorySpy).toBeCalledWith(teamProps.id, {
+        name,
+        fullName
+      })
     })
 
     it('Should return the team with new infos', async () => {
       const { sut } = makeSut()
 
-      const teamProps = TeamBuilder.aTeam().withNewInfos().build()
+      const teamProps = TeamWithIdBuilder.aTeam().withNewInfos().build()
 
       const response = await sut.execute({
         teamId: teamProps.id,
@@ -86,7 +91,7 @@ describe('Update Team Use Case', () => {
     it('Should allow users with COORD role to access this use case', async () => {
       const { sut } = makeSut()
 
-      const teamProps = TeamBuilder.aTeam().withNewInfos().build()
+      const teamProps = TeamWithIdBuilder.aTeam().withNewInfos().build()
 
       const response = await sut.execute({
         teamId: teamProps.id,
@@ -102,7 +107,7 @@ describe('Update Team Use Case', () => {
     it('Should not allow users with less access than COORD to access this use case', async () => {
       const { sut } = makeSut()
 
-      const teamProps = TeamBuilder.aTeam().withNewInfos().build()
+      const teamProps = TeamWithIdBuilder.aTeam().withNewInfos().build()
 
       const response = await sut.execute({
         teamId: teamProps.id,
@@ -120,7 +125,7 @@ describe('Update Team Use Case', () => {
     it('Should return a not found error if there is no team registered with given id', async () => {
       const { sut } = makeSut()
 
-      const teamProps = TeamBuilder.aTeam()
+      const teamProps = TeamWithIdBuilder.aTeam()
         .withNewInfos()
         .withNotRegisteredId()
         .build()
@@ -137,7 +142,7 @@ describe('Update Team Use Case', () => {
     it('Should return an entity error if some team info is invalid', async () => {
       const { sut } = makeSut()
 
-      const teamProps = TeamBuilder.aTeam()
+      const teamProps = TeamWithIdBuilder.aTeam()
         .withNewInfos()
         .withInvalidName()
         .build()
@@ -162,7 +167,7 @@ describe('Update Team Use Case', () => {
           return left(new ConnectionError('Teams Repository'))
         })
 
-      const teamProps = TeamBuilder.aTeam().withNewInfos().build()
+      const teamProps = TeamWithIdBuilder.aTeam().withNewInfos().build()
 
       const response = await sut.execute({
         teamId: teamProps.id,
