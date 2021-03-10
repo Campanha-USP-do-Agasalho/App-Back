@@ -9,7 +9,7 @@ import {
   ListAllTeamsTeamsRepository
 } from '@useCases/ports/Teams/ListAllTeams'
 
-import { Either, left, right } from '@shared/Either'
+import { Either, left, right, WithId } from '@shared'
 
 interface ISutType {
   sut: ListAllTeams
@@ -18,7 +18,9 @@ interface ISutType {
 
 const makeTeamsRepositoryStub = (): ListAllTeamsTeamsRepository => {
   class TeamsRepositoryStub implements ListAllTeamsTeamsRepository {
-    async listAllTeams(): Promise<Either<ConnectionError, TeamProps[]>> {
+    async listAllTeams(): Promise<
+      Either<ConnectionError, WithId<TeamProps>[]>
+    > {
       return right([])
     }
   }
