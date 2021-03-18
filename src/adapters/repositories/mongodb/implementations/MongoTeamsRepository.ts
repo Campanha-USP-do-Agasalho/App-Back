@@ -1,3 +1,6 @@
+import { MongoRepository } from '@adapters/repositories/mongodb/implementations/MongoRepository'
+import { TeamMapper } from '@adapters/repositories/mongodb/mappers'
+import { TeamModel } from '@adapters/repositories/mongodb/schemas'
 import { ITeamsRepository } from '@adapters/repositories/ports'
 
 import { TeamProps } from '@entities'
@@ -5,10 +8,6 @@ import { TeamProps } from '@entities'
 import { ConnectionError } from '@useCases/errors'
 
 import { WithId, Either, left, right } from '@shared'
-
-import { TeamMapper } from '../mappers'
-import { TeamModel } from '../schemas'
-import { MongoRepository } from './MongoRepository'
 
 export class MongoTeamsRepository
   extends MongoRepository
@@ -21,7 +20,14 @@ export class MongoTeamsRepository
 
   async createTeam(
     teamProps: WithId<TeamProps>
-  ): Promise<Either<ConnectionError, WithId<TeamProps>>> {}
+  ): Promise<Either<ConnectionError, WithId<TeamProps>>> {
+    try {
+      const docs = await TeamModel.create(teamProps)
+      return right(TeamMapper.map(docs))
+    } catch (error) {
+      return left(new ConnectionError(this.collection))
+    }
+  }
 
   async listAllTeams(): Promise<Either<ConnectionError, WithId<TeamProps>[]>> {
     try {
@@ -34,12 +40,33 @@ export class MongoTeamsRepository
 
   async recoverTeamById(
     teamId: string
-  ): Promise<Either<ConnectionError, WithId<TeamProps> | null>> {}
+  ): Promise<Either<ConnectionError, WithId<TeamProps> | null>> {
+    try {
+      const docs = await TeamModel.findById(teamId).lean()
+      return right(docs ? TeamMapper.map(docs) : null)
+    } catch (error) {
+      return left(new ConnectionError(this.collection))
+    }
+  }
 
-  async removeTeam(teamId: string): Promise<Either<ConnectionError, null>> {}
+  async removeTeam(teamId: string): Promise<Either<ConnectionError, null>> {
+    try {
+      await TeamModel.findByIdAndDelete(teamId)
+      return right(null)
+    } catch (error) {
+      return left(new ConnectionError(this.collection))
+    }
+  }
 
   async updateTeam(
     teamId: string,
     teamProps: Partial<TeamProps>
-  ): Promise<Either<ConnectionError, null>> {}
+  ): Promise<Either<ConnectionError, null>> {
+    try {
+      await TeamModel.findByIdAndUpdate(teamId, teamProps)
+      return right(null)
+    } catch (error) {
+      return left(new ConnectionError(this.collection))
+    }
+  }
 }

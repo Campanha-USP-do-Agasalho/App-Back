@@ -1,10 +1,9 @@
+import { TeamDocument } from '@adapters/repositories/mongodb/schemas'
 import { LeanDocument } from 'mongoose'
 
 import { TeamProps } from '@entities'
 
 import { WithId } from '@shared'
-
-import { TeamDocument } from '../schemas'
 
 export class TeamMapper {
   static map(entity: LeanDocument<TeamDocument>): WithId<TeamProps> {
