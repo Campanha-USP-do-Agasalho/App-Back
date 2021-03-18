@@ -6,6 +6,14 @@ import { TeamProps } from '@entities'
 import { WithId } from '@shared'
 
 export class TeamMapper {
+  static mapToDocument(entity: WithId<TeamProps>): LeanDocument<TeamDocument> {
+    return {
+      _id: entity.id,
+      name: entity.name,
+      fullName: entity.fullName
+    }
+  }
+
   static map(entity: LeanDocument<TeamDocument>): WithId<TeamProps> {
     return {
       id: entity._id,

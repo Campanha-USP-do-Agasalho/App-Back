@@ -22,7 +22,7 @@ export class MongoTeamsRepository
     teamProps: WithId<TeamProps>
   ): Promise<Either<ConnectionError, WithId<TeamProps>>> {
     try {
-      const docs = await TeamModel.create(teamProps)
+      const docs = await TeamModel.create(TeamMapper.mapToDocument(teamProps))
       return right(TeamMapper.map(docs))
     } catch (error) {
       return left(new ConnectionError(this.collection))
