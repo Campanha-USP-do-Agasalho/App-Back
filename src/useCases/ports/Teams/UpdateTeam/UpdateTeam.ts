@@ -1,4 +1,4 @@
-import { TeamProps } from '@entities'
+import { TeamProps, UserFromRequestProps } from '@entities'
 import { EntityError } from '@entities/errors'
 
 import { UseCase } from '@useCases/contracts'
@@ -11,10 +11,7 @@ import {
 import { WithId } from '@shared'
 
 export type UpdateTeamProps = {
-  userFromRequest: {
-    id: string
-    role: number
-  }
+  userFromRequest: UserFromRequestProps
   teamId: string
   teamProps: Partial<TeamProps>
 }

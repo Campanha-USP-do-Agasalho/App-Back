@@ -1,13 +1,10 @@
-import { TeamProps } from '@entities'
+import { TeamProps, UserFromRequestProps } from '@entities'
 
 import { UseCase } from '@useCases/contracts'
 import { ConnectionError, UnauthorizedError } from '@useCases/errors'
 
 export type CreateTeamProps = {
-  userFromRequest: {
-    id: string
-    role: number
-  }
+  userFromRequest: UserFromRequestProps
   teamProps: TeamProps
 }
 

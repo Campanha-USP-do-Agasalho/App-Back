@@ -1,4 +1,4 @@
-import { TeamProps } from '@entities'
+import { TeamProps, UserFromRequestProps } from '@entities'
 
 import { UseCase } from '@useCases/contracts'
 import { ConnectionError, UnauthorizedError } from '@useCases/errors'
@@ -6,10 +6,7 @@ import { ConnectionError, UnauthorizedError } from '@useCases/errors'
 import { WithId } from '@shared'
 
 export type ListAllTeamsProps = {
-  userFromRequest: {
-    id: string
-    role: number
-  }
+  userFromRequest: UserFromRequestProps
 }
 
 export type ListAllTeamsPossibleErrors = ConnectionError | UnauthorizedError

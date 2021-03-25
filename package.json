@@ -50,6 +50,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "mongodb": "^3.6.5",
-    "mongoose": "^5.12.1"
+    "mongoose": "^5.12.1",
+    "yup": "^0.32.9"
   }
 }

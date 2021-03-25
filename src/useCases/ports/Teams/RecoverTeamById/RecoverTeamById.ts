@@ -10,10 +10,6 @@ import {
 import { WithId } from '@shared'
 
 export type RecoverTeamByIdProps = {
-  userFromRequest: {
-    id: string
-    role: number
-  }
   teamId: string
 }
 

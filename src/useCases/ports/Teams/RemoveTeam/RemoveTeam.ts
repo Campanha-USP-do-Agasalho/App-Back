@@ -1,11 +1,10 @@
+import { UserFromRequestProps } from '@entities'
+
 import { UseCase } from '@useCases/contracts'
 import { ConnectionError, UnauthorizedError } from '@useCases/errors'
 
 export type RemoveTeamProps = {
-  userFromRequest: {
-    id: string
-    role: number
-  }
+  userFromRequest: UserFromRequestProps
   teamId: string
 }
 
