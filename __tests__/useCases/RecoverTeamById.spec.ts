@@ -1,4 +1,4 @@
-import { TeamWithIdBuilder, UserFromRequestBuilder } from '@builders'
+import { TeamWithIdBuilder } from '@builders'
 
 import { TeamProps } from '@entities'
 
@@ -43,8 +43,7 @@ describe('Recover Team By Id Use Case', () => {
     const { sut } = makeSut()
     const team = TeamWithIdBuilder.aTeam().build()
     const response = await sut.execute({
-      teamId: team.id,
-      userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
+      teamId: team.id
     })
 
     expect(response).toEqual(right(team))
@@ -54,24 +53,10 @@ describe('Recover Team By Id Use Case', () => {
     const { sut } = makeSut()
     const team = TeamWithIdBuilder.aTeam().withNotRegisteredId().build()
     const response = await sut.execute({
-      teamId: team.id,
-      userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
+      teamId: team.id
     })
 
     expect(response).toEqual(left(new TeamNotFoundError(team.id)))
-  })
-
-  it('Should allow users with MEMBER role to access this use case', async () => {
-    const { sut } = makeSut()
-    const team = TeamWithIdBuilder.aTeam().build()
-    const response = await sut.execute({
-      teamId: team.id,
-      userFromRequest: UserFromRequestBuilder.aUserFromRequest()
-        .asMember()
-        .build()
-    })
-
-    expect(response.isRight()).toBeTruthy()
   })
 
   it('Should return a connection error if connection to teams repository fails', async () => {
@@ -85,8 +70,7 @@ describe('Recover Team By Id Use Case', () => {
 
     const team = TeamWithIdBuilder.aTeam().build()
     const response = await sut.execute({
-      teamId: team.id,
-      userFromRequest: UserFromRequestBuilder.aUserFromRequest().build()
+      teamId: team.id
     })
 
     expect(response).toEqual(left(new ConnectionError('Teams Repository')))
